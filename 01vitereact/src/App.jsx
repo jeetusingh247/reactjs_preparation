@@ -1,12 +1,15 @@
 import Takla from './01_script';
 
 function App() {
+  const username = "Prarambh"
 
   return (
-    // <>
-    //   <h1>Hello World with vite</h1>
-    // </>
-    <Takla />
+    <>
+      <Takla/>
+      <h1>{username} with vite</h1>
+      <Takla />
+      <p>Test Parameter</p>
+    </>
   )
 }
 

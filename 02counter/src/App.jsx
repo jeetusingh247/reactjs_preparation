@@ -17,9 +17,12 @@ function App() {
   }
 
   const removeValue = () => {
+    
     // console.log("clicked", Math.random());
     console.log("clicked", counter);
-    counter = counter - 2
+    if(counter > 0){
+      counter = counter - 2
+    } 
     setCounter(counter)   
   }
 

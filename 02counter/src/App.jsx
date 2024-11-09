@@ -21,7 +21,7 @@ function App() {
     // console.log("clicked", Math.random());
     console.log("clicked", counter);
     if(counter > 0){
-      counter = counter - 2
+      counter = counter - 1
     } 
     setCounter(counter)   
   }

@@ -1,53 +1,85 @@
+import React, { useState, useEffect } from 'react';
+import './index.css';
+
 const App = () => {
+  const [amount, setAmount] = useState(0);
+  const [fromCurrency, setFromCurrency] = useState('USD');
+  const [toCurrency, setToCurrency] = useState('EUR');
+  const [conversionRate, setConversionRate] = useState(1);
+  const [convertedAmount, setConvertedAmount] = useState(0);
+  const [currencies, setCurrencies] = useState([]);
+
+  useEffect(() => {
+    fetch('https://api.exchangerate-api.com/v4/latest/USD')
+      .then(response => response.json())
+      .then(data => {
+        setCurrencies([...Object.keys(data.rates)]);
+        setConversionRate(data.rates[toCurrency]);
+      });
+  }, [toCurrency]);
+
+  const handleConvert = (e) => {
+    e.preventDefault();
+    setConvertedAmount((amount * conversionRate).toFixed(2));
+  };
+
   return (
     <div className="currency-converter">
       <h2 className="converter-title">Currency Converter</h2>
-      <form className="converter-form">
+      <form className="converter-form" onSubmit={handleConvert}>
         <div className="form-group">
           <label className="form-label">Enter Amount</label>
-          <input type="number" className="form-input" required/>
+          <input 
+            type="number" 
+            className="form-input" 
+            value={amount} 
+            onChange={(e) => setAmount(e.target.value)} 
+            required 
+          />
         </div>
 
         <div className="form-group">
           <div className="form-section">
             <label className="form-label">From</label>
-            <div className="currency-select">
-              <img src="https://flagsapi.com/US/flat/64.png" alt="Flag" />
-              <select className="currency-dropdown">
-                <option value="USD" selected>USD</option>
-                <option value="INR">INR</option>
-                <option value="NPR">NPR</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="swap-icon">
-            <svg width="16" viewBox="0 0 20 19" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M19.13 11.66H.22a.22.22 0 0 0-.22.22v1.62a.22.22 0 0 0 .22.22h16.45l-3.92 4.94a.22.22 0 0 0 .17.35h1.97c.13 0 .25-.06.33-.16l4.59-5.78a.9.9 0 0 0-.7-1.43zM19.78 5.29H3.34L7.26.35A.22.22 0 0 0 7.09 0H5.12a.22.22 0 0 0-.34.16L.19 5.94a.9.9 0 0 0 .68 1.4H19.78a.22.22 0 0 0 .22-.22V5.51a.22.22 0 0 0-.22-.22z"
-                    fill="#000"
-                />
-            </svg>
+            <select 
+              className="form-select" 
+              value={fromCurrency} 
+              onChange={(e) => setFromCurrency(e.target.value)}
+            >
+              {currencies.map(currency => (
+                <option key={currency} value={currency}>
+                  {currency}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="form-section">
-            <label className="form-label">From</label>
-            <div className="currency-select">
-              <img src="https://flagsapi.com/IN/flat/64.png" alt="Flag" />
-              <select className="currency-dropdown">
-                <option value="USD">USD</option>
-                <option value="INR" selected>INR</option>
-                <option value="NPR">NPR</option>
-              </select>
-            </div>
+            <label className="form-label">To</label>
+            <select 
+              className="form-select" 
+              value={toCurrency} 
+              onChange={(e) => setToCurrency(e.target.value)}
+            >
+              {currencies.map(currency => (
+                <option key={currency} value={currency}>
+                  {currency}
+                </option>
+              ))}
+            </select>
           </div>
-
-          <button type="submit" className="submit-button">Get Exchange Rate</button>
-          <p className="exchange-rate-result">1,000 USD = 85,647 INR</p>
         </div>
 
+        <button type="submit" className="convert-button">Convert</button>
       </form>
+
+      {convertedAmount > 0 && (
+        <div className="result">
+          <h3>Converted Amount: {convertedAmount} {toCurrency}</h3>
+        </div>
+      )}
     </div>
-  )
-}
-export default App
+  );
+};
+
+export default App;

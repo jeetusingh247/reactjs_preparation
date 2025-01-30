@@ -34,3 +34,5 @@ This project is a React-based admin panel created by Jeetu Singh. It includes va
 
 We are using Nivo charts, Material-UI for components, and FullCalendar for calendar functionalities.
 
+### Tailwind Shades Extension
+We are using the Tailwind Shades extension for coloring. This extension helps in generating shades and tints for Tailwind CSS colors, making it easier to maintain a consistent color palette throughout the project. It provides a user-friendly interface to visualize and select colors, ensuring that the design remains cohesive and visually appealing.

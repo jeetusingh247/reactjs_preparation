@@ -212,6 +212,6 @@ export const ColorModeProvider = () => {
     }), []);
 
     const theme = useMemo(() => createTheme(ThemeProvider(mode)), [mode]);
-
+    // -- Creating Theme From Material UI -- \\
     return [colorMode, theme];
 }

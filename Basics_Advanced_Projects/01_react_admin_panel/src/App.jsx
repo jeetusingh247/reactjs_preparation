@@ -1,9 +1,9 @@
-import TopNavbar from "./scenes/global/TopNavbar";
-import { ColorModeContext, useMode } from "./theme";
-import { CssBaseline, ThemeProvider } from "@mui/material/styles";
+import TopNavbar from "./scenes/global/TopNavbar.jsx";
+import { ColorModeContext, useMode } from "./theme.jsx";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 
 function App() {
-  const [colorMode, theme] = useMode();
+  const [theme, colorMode] = useMode();
 
   return (
     <ColorModeContext.Provider value={colorMode}>
@@ -19,4 +19,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
